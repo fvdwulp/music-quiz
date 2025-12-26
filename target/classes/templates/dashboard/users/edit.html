@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+
+<div th:replace="~{fragments/menu-left :: menu}"></div>
+<div th:replace="~{fragments/top-content :: top-content}"></div>
+
+        <h1>Edit user</h1>
+        <div class="action-bar">
+
+        </div>
+    <form th:action="@{/users/update}" th:object="${user}" method="post">
+        <div class="form-group mb-3">
+            <label for="username">Username</label>
+            <input id="username" class="form-control" type="text"
+
+                   th:field="*{username}" placeholder="What is the username?" required readonly />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input id="password" class="form-control" type="text"
+                   th:field="*{password}" placeholder="What is the password?" required readonly />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="enabled">Enabled</label>
+            <select id="enabled" class="form-control" th:field="*{enabled}" required>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label>Role</label>
+            <select name="role" class="form-control" required>
+                <option value="ROLE_USER">User</option>
+                <option value="ROLE_ADMIN">Admin</option>
+            </select>
+        </div>
+
+        <input type="submit" class="btn btn-info" value="Save User">
+    </form>
+
+
+
+
+<th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
+

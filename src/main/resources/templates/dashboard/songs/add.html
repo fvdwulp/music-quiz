@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+
+<div th:replace="~{fragments/menu-left :: menu}"></div>
+<div th:replace="~{fragments/top-content :: top-content}"></div>
+
+    <h1>Add song</h1>
+    <div class="action-bar">
+
+    </div>
+    <form th:action="@{/songs/save}" th:object="${song}" method="POST">
+        <div class="form-group mb-3 hide-this">
+            <input type="hidden" th:field="*{id}" />
+        </div>
+        <div class="form-group mb-3">
+            <label for="artist">Artiest</label>
+            <input id="artist" class="form-control" type="text"
+                   th:field="*{artist}" placeholder="Who is the artist?" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="song-name">Song name</label>
+            <input id="song-name" class="form-control" type="text"
+                   th:field="*{songName}" placeholder="What is the song name?" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="preview-url">Preview url</label>
+            <input id="preview-url" class="form-control" type="text"
+                   th:field="*{trackId}" placeholder="What is the preview url" required />
+        </div>
+        <input type="submit" class="btn btn-info" value="Save Song">
+    </form>
+
+<th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
+

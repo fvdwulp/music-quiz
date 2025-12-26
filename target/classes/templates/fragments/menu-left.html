@@ -1,0 +1,38 @@
+<div th:fragment="menu" class="menu-left">
+    <div class="menu-logo">
+        <img th:src="@{/assets/logo-quiz.png}" />
+    </div>
+    <div class="menu-region">
+        <ul>
+            <li th:classappend="${activePage.startsWith('/home')} ? ' active' : ''">
+                <a th:href="@{/home}">
+                    <i class="lni lni-home-2"></i> Home
+                </a>
+            </li>
+            <li th:classappend="${activePage.startsWith('/quizzes')} ? ' active' : ''">
+                <a th:href="@{/quizzes}">
+                    <i class="lni lni-game-pad-modern-1"></i> Quizes
+                </a>
+            </li>
+            <li th:classappend="${activePage.startsWith('/question')} ? ' active' : ''">
+                <a th:href="@{/questions}">
+                    <i class="lni lni-music"></i> Questions
+                </a>
+            </li>
+            <li th:classappend="${activePage.startsWith('/songs')} ? ' active' : ''">
+                <a th:href="@{/songs}">
+                    <i class="lni lni-music"></i> Songs
+                </a>
+            </li>
+            <li th:classappend="${activePage.startsWith('/users')} ? ' active' : ''">
+                <a th:href="@{/users}">
+                    <i class="lni lni-user-4"></i> Gebruikers
+                </a>
+            </li>
+        </ul>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit"><i class="lni lni-exit"></i>Uitloggen</button>
+    </form>
+</div>

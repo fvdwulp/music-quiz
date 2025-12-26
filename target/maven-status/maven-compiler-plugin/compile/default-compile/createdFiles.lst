@@ -1,0 +1,3 @@
+com/example/afix/AfixApplication.class
+com/example/afix/controller/LoginController.class
+com/example/afix/security/DemoSecurityConfig.class

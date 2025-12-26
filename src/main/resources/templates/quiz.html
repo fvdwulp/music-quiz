@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+
+<div id="app">
+    <router-view></router-view>
+
+    <div v-if="loading">Loading questions...</div>
+    <div v-else-if="quiz.enabled == false" class="quiz">
+        <h2>Oops</h2>
+        <p>Deze quiz is niet meer beschikbaar</p>
+    </div>
+    <div v-else-if="question" class="quiz">
+        <p>Vraag {{ index+1 }} / {{ questions.length }}</p>
+        <h2>{{ question.question }}</h2>
+
+        <audio v-if="previewUrl" :src="previewUrl" controls autoplay></audio>
+
+        <div v-for="a in question.answers" :key="a.id">
+            <button :class="{
+                correct: answered && a.id === correctAnswerId,
+                wrong: answered && a.id === selectedAnswerId && a.id !== correctAnswerId
+            }"
+                    @click="!answered && checkAnswer(a)"
+            >
+                {{ a.answer }}
+            </button>
+        </div>
+
+        <p v-if="answered" class="feedback" :class="isCorrect ? 'good' : 'bad'" v-html="feedbackMessage"></p>
+    </div>
+    <div v-else-if="quizDone" class="end_screen">
+        <h1>Quiz afgerond!</h1>
+        <p>Je had {{ correctAnswers }} van de {{ questions.length }} antwoorden goed.</p>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue;
+    const { createRouter, createWebHistory, useRoute } = VueRouter;
+
+    const routes = [
+        { path: '/:id?', name: 'quiz', component: { template: '<div></div>' } }
+    ];
+
+    const router = VueRouter.createRouter({
+        history: VueRouter.createWebHistory('/quiz/'),
+        routes
+    });
+
+    const app = createApp({
+        data() {
+            return {
+                quiz: null,
+                questions: [],
+                index: 0,
+                question: null,
+                answered: false,
+                isCorrect: false,
+                selectedAnswerId: null,
+                correctAnswerId: null,
+                previewUrl: null,
+                loading: true,
+                quizDone: false,
+                correctAnswers: 0,
+            };
+        },
+        computed: {
+            feedbackMessage() {
+                return this.isCorrect
+                    ? '<i class="lni lni-check-circle-1"></i> Goed!'
+                    : '<i class="lni lni-check-circle-1"></i>Fout!';
+            }
+        },
+        async mounted() {
+            const parts = window.location.pathname.split('/');
+            this.quizId = parts[2] || null;
+
+            try {
+                const res = await fetch(`/api/quiz/${this.quizId}`);
+                this.quiz = await res.json();
+                this.loading = false;
+                this.loadQuiz();
+            } catch (e) {
+                console.error('Error fetching questions', e);
+            }
+        },
+        methods: {
+            loadQuiz() {
+                let enabled = this.quiz.enabled;
+                if(enabled)
+                    this.loadQuestion();
+            },
+            loadQuestion() {
+                this.questions = this.quiz.questions;
+                this.answered = false;
+                this.isCorrect = false;
+                this.selectedAnswerId = null;
+                this.correctAnswerId = null;
+                this.previewUrl = null;
+                if (this.index < this.questions.length) {
+                    this.question = this.questions[this.index];
+                    this.playSong();
+                } else {
+                    this.question = null;
+                }
+            },
+            async playSong() {
+                try {
+                    const res = await fetch('/api/songs/preview/' + this.question.trackId);
+                    this.previewUrl = await res.text();
+                } catch (e) {
+                    console.error('Error fetching song preview', e);
+                }
+            },
+            async checkAnswer(answer) {
+                this.selectedAnswerId = answer.id;
+
+                const res = await fetch("/api/questions/check", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        questionId: this.question.id,
+                        answerId: answer.id
+                    })
+                });
+
+                const data = await res.json();
+                this.isCorrect = data.correct;
+                if(data.correct){
+                    this.correctAnswerId = answer.id;
+                    this.correctAnswers++;
+                }else{
+                    this.correctAnswerId = 0
+                }
+                this.answered = true;
+
+
+                setTimeout(() => {
+                    this.index++;
+                    this.loadQuestion();
+                }, 1500);
+            }
+        }
+    });
+
+    app.use(router);
+    console.log(router.getRoutes());
+    app.mount('#app');
+
+</script>
+
+<style>
+    button {
+        padding: 10px 18px;
+        font-size: 16px;
+        margin: 8px 0;
+        width: 100%;
+    }
+
+    .correct {
+        background-color: #28a745 !important;
+        color: white;
+    }
+
+    .wrong {
+        background-color: #dc3545 !important;
+        color: white;
+    }
+
+    .feedback {
+        font-size: 22px;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    .feedback.good { color: #28a745; }
+    .feedback.bad { color: #dc3545; }
+    .feedback i { position: relative; top: 3px; margin-right: 10px; }
+</style>
+
+</body>
+</html>

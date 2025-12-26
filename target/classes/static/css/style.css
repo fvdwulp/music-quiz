@@ -1,0 +1,234 @@
+html, body{
+    font-family: "Roboto", sans-serif;
+}
+a:link, a:visited{
+    text-decoration: none;
+}
+
+input:read-only {
+    background-color: #f8f9fa; /* light gray */
+    color: #555;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+.menu-left{
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: #0C1D48;
+}
+.menu-left .menu-logo{
+    width: 100%;
+    padding: 20px 0px;
+    border-bottom: 1px solid #2D3E6C;
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center;
+}
+.menu-left .menu-logo img{
+    width: 60%;
+
+}
+.menu-left .menu-region{
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+    padding: 30px;
+}
+.menu-left p{
+    color: #71798f;
+    font-weight: bold;
+}
+.menu-left a:link,
+.menu-left a:visited{
+    text-decoration: none;
+    color: #fff;
+}
+.menu-left ul{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    float: left;
+    list-style: none;
+}
+.menu-left ul li{
+    width: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+}
+.menu-left ul li a{
+    width: 100%;
+    padding: 10px;
+    float: left;
+}
+.menu-left ul li.active a{
+    border-radius: 10px;
+    background: #183274;
+}
+.menu-left ul li i{
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+}
+
+.menu-left form{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.menu-left button {
+    width: 100%;
+    padding: 20px 20px;
+    border-top: 1px solid #2D3E6C;
+    display: flex;
+    align-items: center;
+    background: none;
+    border-radius:  0 !important;
+    margin: 0;
+}
+.menu-left button:hover{
+    background: #183274;
+}
+.menu-left button i{
+    margin-right: 5px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.content-right{
+    position: fixed;
+    right: 0px;
+    width: calc(100% - 300px);
+    background: #ededed;
+    height: 100%;
+}
+.top-menu{
+    width: 100%;
+    height: 80px;
+    background: #fff;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1);
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.top-menu .user-holder{
+    width: 150px; float: right;
+}
+.top-menu .user-holder p{
+    margin: 0;
+    font-size: 14px;
+}
+.top-menu .user-holder p:nth-child(1){
+    text-transform: capitalize;
+    color: black;
+}
+.top-menu .user-holder p:nth-child(2){
+    color: #ccc;
+}
+
+.right-content{
+    position: fixed;
+    top: 110px;
+    right: 30px;
+    width: calc(100% - 360px);
+    height: calc(100% - 120px);
+    float: left;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+.action-bar{
+    width: 100%;
+    float: left;
+    padding: 20px 0px;
+}
+.table{ width: 100%; float: left;}
+form .hide-this{ display: none;}
+.table td {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.left-column {
+    text-align: left;
+}
+.form-control{
+    margin-bottom: 10px;
+}
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+#app{
+    position: absolute;
+    width: 100%;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.quiz {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 700px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+.quiz p{
+    width: 100%;
+    color: #444;
+    text-align: center;
+}
+.quiz h2{
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+.quiz audio{
+    width: 100%;
+    float: left;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background: #06c;
+    color: #fff;
+    transition: background 0.2s;
+}
+button:hover { background: #048; }
+.correct { background: #28a745 !important; }
+.wrong { background: #dc3545 !important; }
+
+.end_screen {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 700px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
