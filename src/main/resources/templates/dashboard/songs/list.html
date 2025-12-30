@@ -26,8 +26,9 @@
                 <td th:text="${song.getTrackId()}"></td>
                 <td>
                     <a th:href="@{'/songs/edit/' + ${song.id}}" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a th:href="@{'/songs/delete?id=' + ${song.id}}"
-                       class="btn btn-sm btn-outline-danger">Delete</a>
+                    <form th:action="@{/songs/{id}/delete(id=${song.id})}" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

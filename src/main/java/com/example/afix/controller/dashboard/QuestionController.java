@@ -1,0 +1,103 @@
+package com.example.afix.controller.dashboard;
+
+import com.example.afix.model.Answer;
+import com.example.afix.model.Question;
+import com.example.afix.model.Song;
+import com.example.afix.service.answer.AnswerService;
+import com.example.afix.service.question.QuestionService;
+import com.example.afix.service.song.SongService;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+
+@Controller
+@RequestMapping("/questions")
+public class QuestionController {
+
+    private final QuestionService questionService;
+    private final SongService songService;
+    private final AnswerService answerService;
+
+    public QuestionController(
+            QuestionService questionService,
+            SongService songService,
+            AnswerService answerService
+    ){
+        this.questionService = questionService;
+        this.songService = songService;
+        this.answerService = answerService;
+    }
+
+    @GetMapping("")
+    public String getQuestions(Model model){
+        List<Question> questions = questionService.findAll();
+        model.addAttribute("questions", questions);
+        model.addAttribute("pageTitle", "Vragen");
+
+        return "dashboard/questions/list";
+    }
+
+    @GetMapping("/add")
+    public String addQuestion(Model model){
+        Question question = questionService.newQuestion();
+        question.getAnswers().add(answerService.newAnswer());
+        question.getAnswers().add(answerService.newAnswer());
+        question.getAnswers().add(answerService.newAnswer());
+
+        model.addAttribute("form", question);
+        model.addAttribute("songs", songService.findAll());
+        model.addAttribute("pageTitle", "Vraag toevoegen");
+
+        return "dashboard/questions/edit";
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String editQuestion(Model model, @PathVariable int id){
+        Question question = questionService.getById(id);
+        if(question == null)
+            return "redirect:/questions";
+
+        model.addAttribute("form", question);
+        model.addAttribute("songs", songService.findAll());
+        model.addAttribute("pageTitle", "Vraag aanpassen");
+
+        return "dashboard/questions/edit";
+    }
+
+    @PostMapping("/save")
+    public String saveQuestion(
+            @Valid @ModelAttribute("form") Question question,
+            BindingResult result,
+            Model model
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("form", question);
+            model.addAttribute("songs", songService.findAll());
+            model.addAttribute("pageTitle", "Vraag aanpassen");
+            return "dashboard/questions/edit";
+        }
+
+        for (Answer a : question.getAnswers()) {
+            a.setQuestion(question);
+        }
+        questionService.save(question);
+
+        return "redirect:/questions";
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deleteQuestion(@PathVariable int id){
+        Question question = questionService.getById(id);
+        if(question == null)
+            return "redirect:/questions";
+
+        questionService.deleteById(id);
+
+        return "redirect:/questions";
+    }
+}

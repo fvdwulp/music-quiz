@@ -28,8 +28,9 @@
                 <td th:text="${user.authority.authority}"></td>
                 <td>
                     <a th:href="@{'/users/edit/' + ${user.username}}" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a th:href="@{'/users/delete?id=' + ${user.username}}"
-                       class="btn btn-sm btn-outline-danger">Delete</a>
+                    <form th:action="@{/users/{id}/delete(id=${user.username})}" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

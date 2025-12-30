@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "questions")
@@ -23,16 +29,34 @@ public class Question {
     private Set<Quiz> quizzes = new HashSet<>();
 
     @Column(nullable = false, name = "question")
+    @NotBlank(message = "Vraagje is verplicht")
     private String question;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonManagedReference
+    @Size(min = 3, message = "Minimaal drie antwoorden")
+    @Valid
     private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "song_id", nullable = true)
     @JsonIgnore
     private Song song;
+
+    @AssertTrue(message = "Kies een liedje")
+    public boolean isSongSelected() {
+        return song != null && song.getId() != null;
+    }
+
+    @AssertTrue(message = "Kies 1 antwoord als waar")
+    public boolean hasOneCorrectAnswer() {
+        return answers != null &&
+                answers.stream()
+                        .filter(a -> a.isCorrect() == true)
+                        .count() == 1;
+    }
 
     @JsonProperty("trackId")
     public Integer getCorrectTrackId() {
@@ -74,4 +98,5 @@ public class Question {
     public void setSong(Song song) {
         this.song = song;
     }
+
 }

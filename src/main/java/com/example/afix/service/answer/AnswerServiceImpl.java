@@ -25,6 +25,12 @@ public class AnswerServiceImpl implements AnswerService {
         this.answerRepository = answerRepository;
     }
 
+
+    @Override
+    public Answer newAnswer() {
+        return new Answer();
+    }
+
     @Override
     public List<Answer> findAll() {
         return answerRepository.findAll();

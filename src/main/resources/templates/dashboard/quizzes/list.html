@@ -28,8 +28,9 @@
         </td>
         <td>
             <a th:href="@{'/quizzes/edit/' + ${quiz.id}}" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a th:href="@{'/quizzes/delete?id=' + ${quiz.id}}"
-               class="btn btn-sm btn-outline-danger">Delete</a>
+            <form th:action="@{/quizzes/{id}/delete(id=${quiz.id})}" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
         </td>
         <td>
             <a target="_blank" th:href="@{'/quiz/'+ ${quiz.id}}" class="btn btn-sm btn-outline-primary">Share this quiz</a>

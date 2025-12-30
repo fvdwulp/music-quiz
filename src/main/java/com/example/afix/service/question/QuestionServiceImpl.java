@@ -30,6 +30,11 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    public Question newQuestion() {
+        return new Question();
+    }
+
+    @Override
     public List<Question> findAll() {
         return questionRepository.findAll();
     }
@@ -50,8 +55,8 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Question save(Question theQuestion) {
-        return questionRepository.save(theQuestion);
+    public Question save(Question question) {
+        return questionRepository.save(question);
     }
 
     @Transactional

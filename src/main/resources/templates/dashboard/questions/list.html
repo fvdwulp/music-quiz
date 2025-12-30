@@ -22,8 +22,9 @@
                 <td th:text="${question.getQuestion()}" class="left-column"></td>
                 <td>
                     <a th:href="@{'/questions/edit/' + ${question.id}}" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a th:href="@{'/questions/delete?id=' + ${question.id}}"
-                       class="btn btn-sm btn-outline-danger">Delete</a>
+                    <form th:action="@{/questions/{id}/delete(id=${question.id})}" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

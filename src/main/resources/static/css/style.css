@@ -155,7 +155,14 @@ form .hide-this{ display: none;}
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.left-column {
+.table td a, .table td form{
+    float: left;
+}
+.table td a, .table td form button{
+    margin: 0px 10px 0px 0px;
+}
+
+    .left-column {
     text-align: left;
 }
 .form-control{

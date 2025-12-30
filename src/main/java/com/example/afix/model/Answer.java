@@ -3,6 +3,7 @@ package com.example.afix.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Answer {
     private Question question;
 
     @Column(nullable = false, name = "answer")
+    @NotBlank(message = "Antwoord is verplicht")
     private String answer;
 
     @Column(nullable = false, name = "is_correct")

@@ -3,6 +3,9 @@ package com.example.afix.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ public class Quiz {
     private String userId;
 
     @Column(nullable = false, name = "title")
+    @NotBlank(message = "Titel is verplicht")
     private String title;
 
     @Column(nullable = false, name = "enabled")
@@ -32,6 +36,7 @@ public class Quiz {
             joinColumns = @JoinColumn(name = "quiz_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id")
     )
+    @Size(min = 3, message = "Kies minimaal drie vragen")
     private List<Question> questions = new ArrayList<>();
 
     public Quiz() {

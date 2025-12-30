@@ -9,9 +9,10 @@ import com.example.afix.model.quiz.AnswerResponse;
 import java.util.List;
 
 public interface QuestionService {
+    Question newQuestion();
     List<Question> findAll();
     Question getById(int id);
     Answer answer(AnswerRequest answer);
-    Question save(Question theQuestion);
+    Question save(Question question);
     void deleteById(int id);
 }
