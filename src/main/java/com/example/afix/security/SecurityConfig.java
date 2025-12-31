@@ -60,9 +60,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationFailureHandler failureHandler() {
-        SimpleUrlAuthenticationFailureHandler handler =
-                new SimpleUrlAuthenticationFailureHandler("/login?error");
-        handler.setUseForward(true);
-        return handler;
+        return new SimpleUrlAuthenticationFailureHandler("/login?error");
     }
 }
