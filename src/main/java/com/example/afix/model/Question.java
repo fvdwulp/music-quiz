@@ -40,6 +40,9 @@ public class Question {
     @Valid
     private List<Answer> answers = new ArrayList<>();
 
+    @Transient
+    private Integer correctAnswerIndex;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "song_id", nullable = true)
     @JsonIgnore
@@ -48,14 +51,6 @@ public class Question {
     @AssertTrue(message = "Kies een liedje")
     public boolean isSongSelected() {
         return song != null && song.getId() != null;
-    }
-
-    @AssertTrue(message = "Kies 1 antwoord als waar")
-    public boolean hasOneCorrectAnswer() {
-        return answers != null &&
-                answers.stream()
-                        .filter(a -> a.isCorrect() == true)
-                        .count() == 1;
     }
 
     @JsonProperty("trackId")
@@ -99,4 +94,20 @@ public class Question {
         this.song = song;
     }
 
+    @JsonIgnore
+    public Set<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(Set<Quiz> quizzes) {
+        this.quizzes = quizzes;
+    }
+
+    public Integer getCorrectAnswerIndex() {
+        return correctAnswerIndex;
+    }
+
+    public void setCorrectAnswerIndex(Integer correctAnswerIndex) {
+        this.correctAnswerIndex = correctAnswerIndex;
+    }
 }

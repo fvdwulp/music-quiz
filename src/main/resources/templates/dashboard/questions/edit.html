@@ -36,9 +36,12 @@
                     </div>
                 </div>
                 <div class="col-4 d-flex align-items-center">
-                    <input type="radio"
-                           th:field="*{answers[__${stat.index}__].correct}"
-                           th:value="true"> Correct
+                    <div class="col-4 d-flex align-items-center">
+                        <input type="radio"
+                               th:field="*{correctAnswerIndex}"
+                               th:value="${stat.index}" />
+                        <span class="ms-2">Correct</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,9 +49,8 @@
              th:if="${#fields.hasErrors('answers')}"
              th:errors="*{answers}"></div>
         <div class="text-danger"
-             th:if="${#fields.hasErrors('__all__')}"
-             th:errors="*{__all__}">
-        </div>
+             th:if="${#fields.hasErrors('correctAnswerIndex')}"
+             th:errors="*{correctAnswerIndex}"></div>
 
         <div class="form-group mb-3">
             <label for="song">Kies liedje</label>

@@ -21,11 +21,6 @@ public class SongRestController {
         this.songService = songService;
     }
 
-    @GetMapping("/songs")
-    public  List<Song> song() {
-        return songService.findAll();
-    }
-
     @GetMapping("/songs/preview/{trackId}")
     public String getSongPreviewUrl(@PathVariable int trackId) {
         return songService.getPreviewUrl(trackId);

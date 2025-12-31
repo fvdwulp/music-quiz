@@ -6,6 +6,7 @@ import com.example.afix.model.User;
 import java.util.List;
 
 public interface SongService {
+    Song newSong();
     List<Song> findAll();
     Song findById(int id);
     Song save(Song theSong);

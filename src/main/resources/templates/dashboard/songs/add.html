@@ -17,17 +17,29 @@
         <div class="form-group mb-3">
             <label for="artist">Artiest</label>
             <input id="artist" class="form-control" type="text"
-                   th:field="*{artist}" placeholder="Who is the artist?" required />
+                   th:field="*{artist}" placeholder="Who is the artist?" />
+            <div class="text-danger">
+                <span th:if="${#fields.hasErrors('artist')}"
+                      th:errors="*{artist}"></span>
+            </div>
         </div>
         <div class="form-group mb-3">
             <label for="song-name">Song name</label>
             <input id="song-name" class="form-control" type="text"
-                   th:field="*{songName}" placeholder="What is the song name?" required />
+                   th:field="*{songName}" placeholder="What is the song name?" />
+            <div class="text-danger">
+                <span th:if="${#fields.hasErrors('songName')}"
+                      th:errors="*{songName}"></span>
+            </div>
         </div>
         <div class="form-group mb-3">
             <label for="preview-url">Preview url</label>
-            <input id="preview-url" class="form-control" type="text"
-                   th:field="*{trackId}" placeholder="What is the preview url" required />
+            <input id="preview-url" class="form-control" type="number" min="1"
+                   th:field="*{trackId}" placeholder="What is the preview url" />
+            <div class="text-danger">
+               <span th:if="${#fields.hasErrors('trackId')}"
+                     th:errors="*{trackId}"></span>
+            </div>
         </div>
         <input type="submit" class="btn btn-info" value="Save Song">
     </form>

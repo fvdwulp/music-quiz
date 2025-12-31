@@ -25,13 +25,4 @@ public class QuestionsRestController {
         this.questionService = questionService;
     }
 
-    @PostMapping("/questions/check")
-    public ResponseEntity<AnswerResponse> checkAnswer(@RequestBody AnswerRequest answerRequest) {
-
-        Answer correctAnswer = questionService.answer(answerRequest);
-        boolean isCorrect = correctAnswer != null && correctAnswer.getId() == answerRequest.answerId;
-
-        return ResponseEntity.ok(new AnswerResponse(isCorrect));
-    }
-
 }

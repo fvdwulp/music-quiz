@@ -3,8 +3,10 @@ package com.example.afix.controller.dashboard;
 
 import com.example.afix.model.Song;
 import com.example.afix.service.song.SongService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,15 +32,14 @@ public class SongController {
 
     @GetMapping("/add")
     public String addSong(Model model){
-        Song newSong = new Song();
-        model.addAttribute("song", newSong);
+        model.addAttribute("song", songService.newSong());
         model.addAttribute("pageTitle", "Nummer toevoegen");
 
         return "dashboard/songs/add";
     }
 
     @GetMapping("/edit/{id}")
-    public String editSong(@PathVariable int id, Model model) {
+    public String editSong(@PathVariable Integer id, Model model) {
         Song existingSong = songService.findById(id);
         if (existingSong == null) {
             return "redirect:/songs";
@@ -51,30 +52,24 @@ public class SongController {
     }
 
     @PostMapping("/save")
-    public String saveSong(@ModelAttribute Song theSong, Model model){
-        Song savedSong;
-        if (theSong.getId() != null) {
-            Song existing = songService.findById(theSong.getId());
-            if (existing != null) {
-                existing.setSongName(theSong.getSongName());
-                existing.setArtist(theSong.getArtist());
-                existing.setTrackId(theSong.getTrackId());
-                savedSong = songService.save(existing);
-            } else {
-                savedSong = songService.save(theSong);
-            }
-        } else {
-            // New song — no ID
-            savedSong = songService.save(theSong);
+    public String saveSong(
+            @Valid @ModelAttribute Song theSong,
+            BindingResult result,
+            Model model
+    ){
+        if(result.hasErrors()){
+            model.addAttribute("song", theSong);
+            model.addAttribute("pageTitle", theSong.getId() == null ? "Nummer toevoegen" : "Nummer aanpassen");
+            return "dashboard/songs/add";
         }
 
-        model.addAttribute("song", savedSong);
+        songService.save(theSong);
 
         return "redirect:/songs";
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteSong(@PathVariable int id){
+    public String deleteSong(@PathVariable Integer id){
         Song song = songService.findById(id);
         if(song == null)
             return "redirect:/songs";

@@ -50,11 +50,6 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Answer answer(AnswerRequest answer) {
-        return answerRepository.findByQuestionIdAndIsCorrectTrue(answer.questionId);
-    }
-
-    @Override
     public Question save(Question question) {
         return questionRepository.save(question);
     }

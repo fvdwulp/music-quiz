@@ -2,6 +2,9 @@ package com.example.afix.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "songs")
@@ -12,13 +15,17 @@ public class Song {
     private Integer id;
 
     @Column(nullable = false, name = "song_name")
+    @NotBlank(message = "Naam van het lied is verplicht")
     private String songName;
 
     @Column(nullable = false, name = "artist")
+    @NotBlank(message = "Artiest is verplicht")
     private String artist;
 
     @Column(nullable = false, name = "track_id")
-    private int trackId;
+    @NotNull(message = "Track ID is verplicht")
+    @Positive(message = "Track ID moet numeriek zijn")
+    private Integer trackId;
 
     public Song() {}
 
@@ -46,11 +53,11 @@ public class Song {
         this.artist = artist;
     }
 
-    public int getTrackId() {
+    public Integer getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(int trackId) {
+    public void setTrackId(Integer trackId) {
         this.trackId = trackId;
     }
 

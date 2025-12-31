@@ -48,6 +48,8 @@ public class QuestionController {
         question.getAnswers().add(answerService.newAnswer());
         question.getAnswers().add(answerService.newAnswer());
 
+        question.setCorrectAnswerIndex(0);
+
         model.addAttribute("form", question);
         model.addAttribute("songs", songService.findAll());
         model.addAttribute("pageTitle", "Vraag toevoegen");
@@ -61,6 +63,13 @@ public class QuestionController {
         Question question = questionService.getById(id);
         if(question == null)
             return "redirect:/questions";
+
+        for (int i = 0; i < question.getAnswers().size(); i++) {
+            if (question.getAnswers().get(i).isCorrect()) {
+                question.setCorrectAnswerIndex(i);
+                break;
+            }
+        }
 
         model.addAttribute("form", question);
         model.addAttribute("songs", songService.findAll());
@@ -82,9 +91,12 @@ public class QuestionController {
             return "dashboard/questions/edit";
         }
 
-        for (Answer a : question.getAnswers()) {
+        for (int i = 0; i < question.getAnswers().size(); i++) {
+            Answer a = question.getAnswers().get(i);
             a.setQuestion(question);
+            a.setCorrect(i == question.getCorrectAnswerIndex());
         }
+
         questionService.save(question);
 
         return "redirect:/questions";

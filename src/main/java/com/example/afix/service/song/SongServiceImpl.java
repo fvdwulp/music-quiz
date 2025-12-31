@@ -25,6 +25,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    public Song newSong() {
+        return new Song();
+    }
+
+    @Override
     public List<Song> findAll() {
         return songRepository.findAll();
     }
