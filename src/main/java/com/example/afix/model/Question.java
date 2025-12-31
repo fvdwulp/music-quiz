@@ -40,6 +40,7 @@ public class Question {
     @Valid
     private List<Answer> answers = new ArrayList<>();
 
+    @JsonIgnore
     @Transient
     private Integer correctAnswerIndex;
 
