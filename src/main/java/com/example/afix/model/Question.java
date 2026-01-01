@@ -59,6 +59,10 @@ public class Question {
         return song != null ? song.getTrackId() : null;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
     public Question() {
 
     }
@@ -110,5 +114,13 @@ public class Question {
 
     public void setCorrectAnswerIndex(Integer correctAnswerIndex) {
         this.correctAnswerIndex = correctAnswerIndex;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

@@ -6,7 +6,7 @@
 <div th:replace="~{fragments/menu-left :: menu}"></div>
 <div th:replace="~{fragments/top-content :: top-content}"></div>
 
-    <h1>Edit quiz</h1>
+    <h1>Quiz aanpassen</h1>
     <div class="action-bar">
 
     </div>
@@ -21,7 +21,7 @@
         <div class="form-group mb-3">
             <label for="artist">Title</label>
             <input id="artist" class="form-control" type="text"
-                   th:field="*{title}" placeholder="What is the quiz title?" />
+                   th:field="*{title}" placeholder="What is the quiz titel?" />
             <div class="text-danger"
                  th:if="${#fields.hasErrors('title')}"
                  th:errors="*{title}"></div>
@@ -41,11 +41,8 @@
         <div class="text-danger"
              th:if="${#fields.hasErrors('questions')}"
              th:errors="*{questions}"></div>
-        <input type="submit" class="btn btn-info" value="Save Quiz">
+        <input type="submit" class="btn btn-info" value="Quiz opslaan">
     </form>
-
-
-
 
 <th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
 

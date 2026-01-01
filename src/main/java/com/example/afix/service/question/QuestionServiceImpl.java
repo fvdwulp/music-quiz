@@ -7,6 +7,8 @@ import com.example.afix.model.quiz.AnswerRequest;
 import com.example.afix.model.quiz.AnswerResponse;
 import com.example.afix.repository.AnswerRepository;
 import com.example.afix.repository.QuestionRepository;
+import com.example.afix.service.AbstractUserAwareService;
+import com.example.afix.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class QuestionServiceImpl implements QuestionService{
+public class QuestionServiceImpl extends AbstractUserAwareService implements QuestionService{
 
     QuestionRepository questionRepository;
     AnswerRepository answerRepository;
@@ -23,8 +25,10 @@ public class QuestionServiceImpl implements QuestionService{
     @Autowired
     public QuestionServiceImpl(
             QuestionRepository questionRepository,
-            AnswerRepository answerRepository
+            AnswerRepository answerRepository,
+            UserService userService
     ) {
+        super(userService);
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
     }
@@ -36,13 +40,12 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public List<Question> findAll() {
-        return questionRepository.findAll();
+        return questionRepository.findByOwner(getCurrentUser());
     }
 
     @Override
     public Question getById(int id) {
-
-        Optional<Question> question = questionRepository.findById(id);
+        Optional<Question> question = questionRepository.findByIdAndOwner(id, getCurrentUser());
         if(question.isPresent())
             return question.get();
         else
@@ -51,13 +54,14 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Question save(Question question) {
+        question.setOwner(getCurrentUser());
         return questionRepository.save(question);
     }
 
     @Transactional
     @Override
     public void deleteById(int id) {
-        questionRepository.deleteById(id);
+        questionRepository.deleteByIdAndOwner(id, getCurrentUser());
     }
 
 }

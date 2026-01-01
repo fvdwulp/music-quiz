@@ -39,6 +39,10 @@ public class Quiz {
     @Size(min = 3, message = "Kies minimaal drie vragen")
     private List<Question> questions = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
     public Quiz() {
 
     }
@@ -81,5 +85,13 @@ public class Quiz {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

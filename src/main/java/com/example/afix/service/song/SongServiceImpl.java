@@ -3,6 +3,7 @@ package com.example.afix.service.song;
 import com.example.afix.model.User;
 import com.example.afix.repository.SongRepository;
 import com.example.afix.model.Song;
+import com.example.afix.service.AbstractUserAwareService;
 import com.example.afix.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SongServiceImpl implements SongService {
+public class SongServiceImpl extends AbstractUserAwareService implements SongService {
 
-    private SongRepository songRepository;
-    private UserService userService;
+    private final SongRepository songRepository;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
@@ -25,8 +25,8 @@ public class SongServiceImpl implements SongService {
             SongRepository songRepository,
             UserService userService
     ) {
+        super(userService);
         this.songRepository = songRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -36,12 +36,12 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> findAll() {
-        return songRepository.findAll();
+        return songRepository.findByOwner(getCurrentUser());
     }
 
     @Override
     public Song findById(int id) {
-        Optional<Song> song = songRepository.findById(id);
+        Optional<Song> song = songRepository.findByIdAndOwner(id, getCurrentUser());
         if(song.isPresent())
             return song.get();
         else
@@ -50,8 +50,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public Song save(Song theSong) {
-        User user = userService.getCurrentUser();
-        theSong.setOwner(user);
+        theSong.setOwner(getCurrentUser());
         return songRepository.save(theSong);
 
     }
@@ -59,7 +58,7 @@ public class SongServiceImpl implements SongService {
     @Transactional
     @Override
     public void deleteById(int id) {
-        songRepository.deleteById(id);
+        songRepository.deleteByIdAndOwner(id, getCurrentUser());
     }
 
     @Override

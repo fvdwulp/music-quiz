@@ -6,28 +6,28 @@
 <div th:replace="~{fragments/menu-left :: menu}"></div>
 <div th:replace="~{fragments/top-content :: top-content}"></div>
 
-        <h1>List of Songs</h1>
+        <h1>Lijst van liedjes</h1>
         <div class="action-bar">
-            <a th:href="@{/songs/add}" class="btn btn-primary">Add Song</a>
+            <a th:href="@{/songs/add}" class="btn btn-primary">Liedje toevoegen</a>
         </div>
         <table class="table table-bordered table-striped text-center">
             <thead class="table-dark">
             <tr>
-                <th>Artist</th>
-                <th>Songname</th>
-                <th>Track id</th>
-                <th></th>
+                <th class="left-column">Artiest</th>
+                <th class="left-column">Nummer</th>
+                <th class="left-column">Track id</th>
+                <th th:width="230px">Acties</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="song: ${songs}">
-                <td th:text="${song.getArtist()}"></td>
-                <td th:text="${song.getSongName()}"></td>
-                <td th:text="${song.getTrackId()}"></td>
+                <td class="left-column" th:text="${song.getArtist()}"></td>
+                <td class="left-column" th:text="${song.getSongName()}"></td>
+                <td class="left-column" th:text="${song.getTrackId()}"></td>
                 <td>
-                    <a th:href="@{'/songs/edit/' + ${song.id}}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a th:href="@{'/songs/edit/' + ${song.id}}" class="btn btn-sm btn-outline-primary">Aanpassen</a>
                     <form th:action="@{/songs/{id}/delete(id=${song.id})}" method="post">
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Verwijderen</button>
                     </form>
                 </td>
             </tr>

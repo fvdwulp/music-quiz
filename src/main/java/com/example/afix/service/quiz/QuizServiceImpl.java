@@ -1,8 +1,9 @@
 package com.example.afix.service.quiz;
 
 import com.example.afix.model.Quiz;
-import com.example.afix.model.Song;
 import com.example.afix.repository.QuizRepository;
+import com.example.afix.service.AbstractUserAwareService;
+import com.example.afix.service.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,11 +12,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class QuizServiceImpl implements QuizService {
+public class QuizServiceImpl extends AbstractUserAwareService implements QuizService {
 
     QuizRepository quizRepository;
 
-    public QuizServiceImpl(QuizRepository quizRepository) {
+    public QuizServiceImpl(
+            QuizRepository quizRepository,
+            UserService userService
+    ) {
+        super(userService);
         this.quizRepository = quizRepository;
     }
 
@@ -26,12 +31,12 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public List<Quiz> findAll() {
-        return quizRepository.findAll();
+        return quizRepository.findByOwner(getCurrentUser());
     }
 
     @Override
     public Quiz findByString(UUID id) {
-        Optional<Quiz> quiz = quizRepository.findById(id);
+        Optional<Quiz> quiz = quizRepository.findByIdAndOwner(id, getCurrentUser());
         if(quiz.isPresent())
             return quiz.get();
         else
@@ -40,12 +45,13 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz save(Quiz theQuiz) {
+        theQuiz.setOwner(getCurrentUser());
         return quizRepository.save(theQuiz);
     }
 
     @Transactional
     @Override
     public void deleteById(UUID id) {
-        quizRepository.deleteById(id);
+        quizRepository.deleteByIdAndOwner(id, getCurrentUser());
     }
 }

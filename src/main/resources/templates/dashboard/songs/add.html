@@ -6,7 +6,7 @@
 <div th:replace="~{fragments/menu-left :: menu}"></div>
 <div th:replace="~{fragments/top-content :: top-content}"></div>
 
-    <h1>Add song</h1>
+    <h1>Liedje toevoegen</h1>
     <div class="action-bar">
 
     </div>
@@ -17,31 +17,31 @@
         <div class="form-group mb-3">
             <label for="artist">Artiest</label>
             <input id="artist" class="form-control" type="text"
-                   th:field="*{artist}" placeholder="Who is the artist?" />
+                   th:field="*{artist}" placeholder="Wie is de artiest" />
             <div class="text-danger">
                 <span th:if="${#fields.hasErrors('artist')}"
                       th:errors="*{artist}"></span>
             </div>
         </div>
         <div class="form-group mb-3">
-            <label for="song-name">Song name</label>
+            <label for="song-name">Nummer</label>
             <input id="song-name" class="form-control" type="text"
-                   th:field="*{songName}" placeholder="What is the song name?" />
+                   th:field="*{songName}" placeholder="Wat is het nummer?" />
             <div class="text-danger">
                 <span th:if="${#fields.hasErrors('songName')}"
                       th:errors="*{songName}"></span>
             </div>
         </div>
         <div class="form-group mb-3">
-            <label for="preview-url">Preview url</label>
+            <label for="preview-url">Voorbeeld url</label>
             <input id="preview-url" class="form-control" type="number" min="1"
-                   th:field="*{trackId}" placeholder="What is the preview url" />
+                   th:field="*{trackId}" placeholder="Wat is het voorbeld url" />
             <div class="text-danger">
                <span th:if="${#fields.hasErrors('trackId')}"
                      th:errors="*{trackId}"></span>
             </div>
         </div>
-        <input type="submit" class="btn btn-info" value="Save Song">
+        <input type="submit" class="btn btn-info" value="Liedje opslaan">
     </form>
 
 <th:block th:insert="fragments/bottom-content :: close-divs"></th:block>

@@ -6,24 +6,24 @@
 <div th:replace="~{fragments/menu-left :: menu}"></div>
 <div th:replace="~{fragments/top-content :: top-content}"></div>
 
-        <h1>List of questions</h1>
+        <h1>Lijst met vragen</h1>
         <div class="action-bar">
-            <a th:href="@{/questions/add}" class="btn btn-primary">Add Question</a>
+            <a th:href="@{/questions/add}" class="btn btn-primary">Vraag toevoegen</a>
         </div>
         <table class="table table-bordered table-striped text-center">
             <thead class="table-dark">
             <tr>
-                <th class="left-column">Question</th>
-                <th></th>
+                <th class="left-column">Vragen</th>
+                <th th:width="240px">Acties</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="question: ${questions}">
                 <td th:text="${question.getQuestion()}" class="left-column"></td>
                 <td>
-                    <a th:href="@{'/questions/edit/' + ${question.id}}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a th:href="@{'/questions/edit/' + ${question.id}}" class="btn btn-sm btn-outline-primary">Aanpassen</a>
                     <form th:action="@{/questions/{id}/delete(id=${question.id})}" method="post">
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Verwijderen</button>
                     </form>
                 </td>
             </tr>

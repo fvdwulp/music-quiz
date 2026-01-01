@@ -6,34 +6,34 @@
 <div th:replace="~{fragments/menu-left :: menu}"></div>
 <div th:replace="~{fragments/top-content :: top-content}"></div>
 
-<h1>List of Quizes</h1>
+<h1>Lijst met quizzen</h1>
 <div class="action-bar">
-    <a th:href="@{/quizzes/add}" class="btn btn-primary">Add Quiz</a>
+    <a th:href="@{/quizzes/add}" class="btn btn-primary">Quiz toevoegen</a>
 </div>
 <table class="table table-bordered table-striped text-center">
     <thead class="table-dark">
     <tr>
-        <th>Title</th>
-        <th>Enabled</th>
-        <th></th>
-        <th></th>
+        <th class="text-start">Titel</th>
+        <th th:width="40px">Beschikbaar</th>
+        <th th:width="250px">Acties</th>
+        <th th:width="50px">Delen</th>
     </tr>
     </thead>
     <tbody>
 
     <tr th:each="quiz: ${quizzes}">
-        <td th:text="${quiz.title}"></td>
+        <td class="text-start" th:text="${quiz.title}"></td>
         <td>
             <input type="checkbox" th:checked="${quiz.enabled}" disabled />
         </td>
         <td>
-            <a th:href="@{'/quizzes/edit/' + ${quiz.id}}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a th:href="@{'/quizzes/edit/' + ${quiz.id}}" class="btn btn-sm btn-outline-primary">Aanpassen</a>
             <form th:action="@{/quizzes/{id}/delete(id=${quiz.id})}" method="post">
-                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                <button type="submit" class="btn btn-sm btn-outline-danger">Verwijderen</button>
             </form>
         </td>
         <td>
-            <a target="_blank" th:href="@{'/quiz/'+ ${quiz.id}}" class="btn btn-sm btn-outline-primary">Share this quiz</a>
+            <a target="_blank" th:href="@{'/quiz/'+ ${quiz.id}}" class="btn btn-sm btn-outline-primary">Delen</a>
         </td>
     </tr>
     </tbody>
