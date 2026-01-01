@@ -1,7 +1,9 @@
 package com.example.afix.service.song;
 
+import com.example.afix.model.User;
 import com.example.afix.repository.SongRepository;
 import com.example.afix.model.Song;
+import com.example.afix.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,13 +17,16 @@ import java.util.Optional;
 public class SongServiceImpl implements SongService {
 
     private SongRepository songRepository;
+    private UserService userService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     public SongServiceImpl(
-            SongRepository songRepository
+            SongRepository songRepository,
+            UserService userService
     ) {
         this.songRepository = songRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -45,7 +50,10 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public Song save(Song theSong) {
+        User user = userService.getCurrentUser();
+        theSong.setOwner(user);
         return songRepository.save(theSong);
+
     }
 
     @Transactional

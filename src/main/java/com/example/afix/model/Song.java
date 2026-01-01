@@ -27,6 +27,10 @@ public class Song {
     @Positive(message = "Track ID moet numeriek zijn")
     private Integer trackId;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
     public Song() {}
 
     public Integer getId() {
@@ -61,6 +65,11 @@ public class Song {
         this.trackId = trackId;
     }
 
+    public User getOwner() {
+        return owner;
+    }
 
-
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }

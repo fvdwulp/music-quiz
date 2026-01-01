@@ -16,18 +16,6 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
-
-        manager.setUsersByUsernameQuery(
-                "SELECT username, password, enabled FROM users WHERE username=?"
-        );
-        manager.setAuthoritiesByUsernameQuery(
-                "SELECT username, authority FROM authorities WHERE username=?"
-        );
-        return manager;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

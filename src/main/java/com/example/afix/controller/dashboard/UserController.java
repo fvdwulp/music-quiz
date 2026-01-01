@@ -1,23 +1,31 @@
 package com.example.afix.controller.dashboard;
 
 import com.example.afix.exception.UserAlreadyExistsException;
-import com.example.afix.model.Authority;
+import com.example.afix.model.Role;
 import com.example.afix.model.User;
+import com.example.afix.service.role.RoleService;
 import com.example.afix.service.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public UserController(UserService theEmployeeService){
-        userService = theEmployeeService;
+    public UserController(
+            UserService theEmployeeService,
+            RoleService roleService
+    ){
+        this.userService = theEmployeeService;
+        this.roleService = roleService;
     }
 
 
@@ -31,36 +39,42 @@ public class UserController {
 
     @GetMapping("/add")
     public String addEmployee(Model model){
-        User theUser = new User();
-        model.addAttribute("user", theUser);
+        var allRoles = roleService.findAll();
+        model.addAttribute("user", userService.newUser());
+        model.addAttribute("roles", allRoles);
         model.addAttribute("pageTitle", "Gebruikers toevoegen");
 
         return "dashboard/users/add";
     }
 
-    @GetMapping("/edit/{username}")
-    public String editUser(@PathVariable String username, Model model) {
-        User existingUser = userService.findByUsername(username);
-        model.addAttribute("pageTitle", "Gebruiker aanpassen");
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable Integer id, Model model) {
+        User existingUser = userService.findById(id);
         if (existingUser == null) {
             return "redirect:/users";
         }
 
+        var allRoles = roleService.findAll();
+
         model.addAttribute("user", existingUser);
+        model.addAttribute("roles", allRoles);
+        model.addAttribute("pageTitle", "Gebruiker aanpassen");
         return "dashboard/users/edit";
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute User user,
-                           @RequestParam("role") String role) {
+    public String saveUser(@ModelAttribute User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
             throw new UserAlreadyExistsException("User already exists!");
         }
 
-        Authority auth = new Authority();
-        auth.setAuthority(role);
-        auth.setUser(user);
-        user.setAuthority(auth);
+        user.setEnabled(user.getEnabled());
+
+        Set<Role> managedRoles = user.getRoles()
+                .stream()
+                .map(role -> roleService.findById(role.getId()))
+                .collect(Collectors.toSet());
+        user.setRoles(managedRoles);
 
         userService.save(user);
 
@@ -68,18 +82,19 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute User user,
-                             @RequestParam("role") String role) {
-        User existingUser = userService.findByUsername(user.getUsername());
+    public String updateUser(@ModelAttribute User user) {
+        User existingUser = userService.findById(user.getId());
         if (existingUser == null) {
             throw new RuntimeException("User not found: " + user.getUsername());
         }
 
         existingUser.setEnabled(user.getEnabled());
 
-        Authority authority = existingUser.getAuthority();
-        authority.setAuthority(role);
-        existingUser.setAuthority(authority);
+        Set<Role> managedRoles = user.getRoles()
+                .stream()
+                .map(role -> roleService.findById(role.getId()))
+                .collect(Collectors.toSet());
+        existingUser.setRoles(managedRoles);
 
         userService.save(existingUser);
 
@@ -87,13 +102,13 @@ public class UserController {
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteUser(@PathVariable String id){
-        User theEmployee = userService.findByUsername(id);
+    public String deleteUser(@PathVariable Integer id){
+        User theEmployee = userService.findById(id);
         if(theEmployee == null){
             return "redirect:/users";
         }
 
-        userService.deleteByUsername(id);
+        userService.deleteById(id);
 
         return "redirect:/users";
     }

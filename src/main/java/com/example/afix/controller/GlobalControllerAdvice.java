@@ -22,20 +22,4 @@ public class GlobalControllerAdvice {
         }
         return null;
     }
-
-    @ModelAttribute("authority")
-    public String addAuthorityToModel() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.isAuthenticated()) {
-            String username = auth.getAuthorities().iterator().next().toString();
-            switch (username) {
-                case "ROLE_ADMIN":
-                    return "Admin";
-                case "ROLE_USER":
-                    return "User";
-            }
-        }
-        return null;
-    }
-
 }

@@ -11,17 +11,17 @@
             </li>
             <li th:classappend="${activePage.startsWith('/quizzes')} ? ' active' : ''">
                 <a th:href="@{/quizzes}">
-                    <i class="lni lni-game-pad-modern-1"></i> Quizes
+                    <i class="lni lni-game-pad-modern-1"></i> Quizzen
                 </a>
             </li>
             <li th:classappend="${activePage.startsWith('/question')} ? ' active' : ''">
                 <a th:href="@{/questions}">
-                    <i class="lni lni-music"></i> Questions
+                    <i class="lni lni-music"></i> Vragen
                 </a>
             </li>
             <li th:classappend="${activePage.startsWith('/songs')} ? ' active' : ''">
                 <a th:href="@{/songs}">
-                    <i class="lni lni-music"></i> Songs
+                    <i class="lni lni-music"></i> Liedjes
                 </a>
             </li>
             <li th:classappend="${activePage.startsWith('/users')} ? ' active' : ''">
