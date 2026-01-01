@@ -5,6 +5,11 @@
 *.iws
 out/
 
+# Spring Boot logs
+logs/
+*.log
+*.log.*
+
 # Maven
 target/
 pom.xml.tag
