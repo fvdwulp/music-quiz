@@ -1,5 +1,7 @@
 package com.example.afix.service.quiz;
 
+import com.example.afix.audit.Audit;
+import com.example.afix.audit.AuditAction;
 import com.example.afix.model.Quiz;
 import com.example.afix.repository.QuizRepository;
 import com.example.afix.service.AbstractUserAwareService;
@@ -44,6 +46,7 @@ public class QuizServiceImpl extends AbstractUserAwareService implements QuizSer
     }
 
     @Override
+    @Audit(action = AuditAction.QUIZ_UPDATED, entity = "Quiz")
     public Quiz save(Quiz theQuiz) {
         theQuiz.setOwner(getCurrentUser());
         return quizRepository.save(theQuiz);
@@ -51,6 +54,7 @@ public class QuizServiceImpl extends AbstractUserAwareService implements QuizSer
 
     @Transactional
     @Override
+    @Audit(action = AuditAction.QUIZ_DELETED, entity = "Quiz")
     public void deleteById(UUID id) {
         quizRepository.deleteByIdAndOwner(id, getCurrentUser());
     }

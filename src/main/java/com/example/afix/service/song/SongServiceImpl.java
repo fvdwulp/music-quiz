@@ -1,5 +1,7 @@
 package com.example.afix.service.song;
 
+import com.example.afix.audit.Audit;
+import com.example.afix.audit.AuditAction;
 import com.example.afix.model.User;
 import com.example.afix.repository.SongRepository;
 import com.example.afix.model.Song;
@@ -49,6 +51,7 @@ public class SongServiceImpl extends AbstractUserAwareService implements SongSer
     }
 
     @Override
+    @Audit(action = AuditAction.SONG_CREATED, entity = "Song")
     public Song save(Song theSong) {
         theSong.setOwner(getCurrentUser());
         return songRepository.save(theSong);
@@ -57,6 +60,7 @@ public class SongServiceImpl extends AbstractUserAwareService implements SongSer
 
     @Transactional
     @Override
+    @Audit(action = AuditAction.SONG_DELETED, entity = "Song")
     public void deleteById(int id) {
         songRepository.deleteByIdAndOwner(id, getCurrentUser());
     }

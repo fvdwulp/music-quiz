@@ -29,6 +29,11 @@
                     <i class="lni lni-user-4"></i> Gebruikers
                 </a>
             </li>
+            <li th:classappend="${activePage.startsWith('/logs')} ? ' active' : ''">
+                <a th:href="@{/logs}">
+                    <i class="lni lni-bolt-2"></i> Logs
+                </a>
+            </li>
         </ul>
     </div>
     <form th:action="@{/logout}" method="post">

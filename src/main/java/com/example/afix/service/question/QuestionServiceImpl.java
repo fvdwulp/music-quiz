@@ -1,10 +1,8 @@
 package com.example.afix.service.question;
 
-import com.example.afix.model.Answer;
+import com.example.afix.audit.Audit;
+import com.example.afix.audit.AuditAction;
 import com.example.afix.model.Question;
-import com.example.afix.model.Song;
-import com.example.afix.model.quiz.AnswerRequest;
-import com.example.afix.model.quiz.AnswerResponse;
 import com.example.afix.repository.AnswerRepository;
 import com.example.afix.repository.QuestionRepository;
 import com.example.afix.service.AbstractUserAwareService;
@@ -53,6 +51,7 @@ public class QuestionServiceImpl extends AbstractUserAwareService implements Que
     }
 
     @Override
+    @Audit(action = AuditAction.QUESTION_UPDATED, entity = "Question")
     public Question save(Question question) {
         question.setOwner(getCurrentUser());
         return questionRepository.save(question);
@@ -60,6 +59,7 @@ public class QuestionServiceImpl extends AbstractUserAwareService implements Que
 
     @Transactional
     @Override
+    @Audit(action = AuditAction.QUESTION_DELETED, entity = "Question")
     public void deleteById(int id) {
         questionRepository.deleteByIdAndOwner(id, getCurrentUser());
     }

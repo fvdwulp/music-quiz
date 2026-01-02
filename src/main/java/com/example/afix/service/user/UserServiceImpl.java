@@ -1,5 +1,7 @@
 package com.example.afix.service.user;
 
+import com.example.afix.audit.Audit;
+import com.example.afix.audit.AuditAction;
 import com.example.afix.repository.UserRepository;
 import com.example.afix.model.User;
 import com.sun.security.auth.UserPrincipal;
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Audit(action = AuditAction.USER_UPDATED, entity = "User")
     public User save(User theUser) {
         if (!theUser.getPassword().startsWith("$2a$") &&
                 !theUser.getPassword().startsWith("$2b$") &&
@@ -77,6 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
+    @Audit(action = AuditAction.USER_DELETED, entity = "User")
     public void deleteById(Integer id) {
         userRepository.deleteById(id);
     }
