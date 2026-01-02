@@ -17,6 +17,10 @@ input:read-only {
     height: 100%;
     background: #0C1D48;
 }
+.logo-click {
+    display: flex;
+    justify-content: center; /* horizontal center */
+}
 .menu-left .menu-logo{
     width: 100%;
     padding: 20px 0px;
@@ -26,7 +30,7 @@ input:read-only {
     align-items: center;
 }
 .menu-left .menu-logo img{
-    width: 60%;
+    width: 50%;
 
 }
 .menu-left .menu-region{

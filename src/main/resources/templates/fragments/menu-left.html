@@ -1,6 +1,8 @@
-<div th:fragment="menu" class="menu-left">
+<div th:fragment="menu" class="menu-left" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="menu-logo">
-        <img th:src="@{/assets/logo-quiz.png}" />
+        <a class="logo-click" th:href="@{/home}">
+            <img th:src="@{/assets/logo-quiz.png}" />
+        </a>
     </div>
     <div class="menu-region">
         <ul>
@@ -24,12 +26,12 @@
                     <i class="lni lni-music"></i> Liedjes
                 </a>
             </li>
-            <li th:classappend="${activePage.startsWith('/users')} ? ' active' : ''">
+            <li sec:authorize="hasRole('ADMIN')" th:classappend="${activePage.startsWith('/users')} ? ' active' : ''">
                 <a th:href="@{/users}">
                     <i class="lni lni-user-4"></i> Gebruikers
                 </a>
             </li>
-            <li th:classappend="${activePage.startsWith('/logs')} ? ' active' : ''">
+            <li sec:authorize="hasRole('ADMIN')" th:classappend="${activePage.startsWith('/logs')} ? ' active' : ''">
                 <a th:href="@{/logs}">
                     <i class="lni lni-bolt-2"></i> Logs
                 </a>
