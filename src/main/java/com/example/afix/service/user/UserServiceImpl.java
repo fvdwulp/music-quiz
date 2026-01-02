@@ -6,6 +6,7 @@ import com.example.afix.repository.UserRepository;
 import com.example.afix.model.User;
 import com.sun.security.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@PreAuthorize("hasRole('ADMIN')")
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -64,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("isAuthenticated()")
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 

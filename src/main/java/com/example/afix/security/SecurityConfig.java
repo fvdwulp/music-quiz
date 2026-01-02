@@ -2,6 +2,7 @@ package com.example.afix.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import javax.sql.DataSource;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
 
@@ -26,7 +28,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/css/**", "/js/**", "/images/**", "/quiz", "/api/questions", "/api/songs/preview/*", "/api/questions/**").permitAll()
+                        .requestMatchers("/logs/**", "/users/**").hasAnyRole( "ADMIN")
+                        .requestMatchers("/home/**", "/quizzes/**", "/questions/**", "/songs/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/login", "/quiz", "/api/questions", "/api/songs/preview/*", "/api/questions/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest()
                         .authenticated()
                 )
@@ -51,3 +56,4 @@ public class SecurityConfig {
         return new SimpleUrlAuthenticationFailureHandler("/login?error");
     }
 }
+

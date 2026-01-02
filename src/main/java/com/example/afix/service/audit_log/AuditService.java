@@ -5,11 +5,13 @@ import com.example.afix.model.AuditLog;
 import com.example.afix.repository.AuditLogRepository;
 import com.example.afix.service.AbstractUserAwareService;
 import com.example.afix.service.user.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@PreAuthorize("hasRole('ADMIN')")
 public class AuditService extends AbstractUserAwareService {
 
     private final AuditLogRepository repository;
