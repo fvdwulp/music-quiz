@@ -35,7 +35,7 @@
         <div class="form-group mb-3">
             <label for="preview-url">Voorbeeld url</label>
             <input id="preview-url" class="form-control" type="number" min="1"
-                   th:field="*{trackId}" placeholder="Wat is het voorbeld url" />
+                   th:field="*{trackId}" placeholder="Wat is de trackId" />
             <div class="text-danger">
                <span th:if="${#fields.hasErrors('trackId')}"
                      th:errors="*{trackId}"></span>

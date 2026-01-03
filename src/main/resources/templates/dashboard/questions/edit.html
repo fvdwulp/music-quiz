@@ -56,7 +56,7 @@
             <label for="song">Kies een liedje</label>
             <select id="song" class="form-control" th:field="*{song.id}">
                 <option value="">-- Kies een liedje --</option>
-                <option th:each="s : ${songs}" th:value="${s.id}" th:text="${s.songName}"></option>
+                <option th:each="s : ${songs}" th:value="${s.id}" th:text="${s.artist + ' - ' + s.songName}"></option>
             </select>
             <div class="text-danger"
                  th:if="${#fields.hasErrors('songSelected')}"
