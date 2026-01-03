@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+
+<div th:replace="~{fragments/menu-left :: menu}"></div>
+
+<div th:replace="~{fragments/top-content :: top-content}"></div>
+
+<h1>Jouw populaire quiz liedjes</h1>
+<section class="top-row">
+    <div class="card-image">
+        <img th:src="@{/assets/linkin-park.jpeg}" alt="Cover">
+        <div class="card-overlay">
+            <h4>Linkin Park</h4>
+            <span>In the end</span>
+        </div>
+    </div>
+
+    <div class="card-image">
+        <img th:src="@{/assets/britney-spears.png}" alt="Cover">
+        <div class="card-overlay">
+            <h4>Britney Spears</h4>
+            <span>Toxic</span>
+        </div>
+    </div>
+
+    <div class="card-image">
+        <img th:src="@{/assets/coldplay-fix-you.jpg}" alt="Cover">
+        <div class="card-overlay">
+            <h4>Coldplay</h4>
+            <span>Fix you</span>
+        </div>
+    </div>
+    <div class="card-image">
+        <img th:src="@{/assets/snow-patrol.jpeg}" alt="Cover">
+        <div class="card-overlay">
+            <h4>Snow Patrol</h4>
+            <span>Chasing cars</span>
+        </div>
+    </div>
+
+    <div class="card-image">
+        <img th:src="@{/assets/alicia-keys.png}" alt="Cover">
+        <div class="card-overlay">
+            <h4>Alicia Keys</h4>
+            <span>Fallin</span>
+        </div>
+    </div>
+
+    <div class="card-image">
+        <img th:src="@{/assets/kings-of-leon.jpeg}" alt="Cover">
+        <div class="card-overlay">
+            <h4>Kings of Leon</h4>
+            <span>Use somebody</span>
+        </div>
+    </div>
+</section>
+
+<section class="two-columns">
+    <div class="column">
+        <h3>Acties</h3>
+        <a th:href="@{/quizzes/add}" class="list-item">
+            <img th:src="@{/assets/icon_add_quiz.png}" alt="">
+            <div>
+                <strong>Quiz aanmaken</strong>
+            </div>
+        </a>
+        <a th:href="@{/songs/add}" class="list-item">
+            <img th:src="@{/assets/icon_add_song.png}" alt="">
+            <div>
+                <strong>Liedje toevoegen</strong>
+            </div>
+        </a>
+        <a th:href="@{/questions/add}" class="list-item">
+            <img th:src="@{/assets/icon_add_question.png}" alt="">
+            <div>
+                <strong>Vraag aanmaken</strong>
+            </div>
+        </a>
+    </div>
+    <div class="column">
+        <h3>Populaire genres</h3>
+
+        <div class="list-item">
+            <img th:src="@{/assets/fresh-house.jpg}" alt="">
+            <div>
+                <strong>Fresh house</strong>
+            </div>
+        </div>
+        <div class="list-item">
+            <img th:src="@{/assets/nl-hot.jpg}" alt="">
+            <div>
+                <strong>NL hot</strong>
+            </div>
+        </div>
+        <div class="list-item">
+            <img th:src="@{/assets/new-country.jpg}" alt="">
+            <div>
+                <strong>New Country</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
+
