@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/header-error :: head}"></head>
+<body class="d-flex align-items-center justify-content-center">
+
+<div class="container text-center">
+    <div class="error-card mx-auto" style="max-width: 520px;">
+        <img class="logo" th:src="@{/assets/logo-quiz.png}" />
+        <div class="error-code" th:text="${status}">403</div>
+        <div class="mt-3" th:text="${error}">Access denied</div>
+        <p class="error-subtitle mt-2">
+            This track is not on your playlist.<br>
+            You don’t have permission to access this page.
+        </p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="/" class="btn btn-primary">
+                Go home
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
