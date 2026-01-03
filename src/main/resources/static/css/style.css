@@ -145,6 +145,11 @@ input:read-only {
     background: #fff;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
+    overflow-y: auto;
+}
+.right-content nav{
+    float:left;
+    margin: 10px 0px 20px 0px;
 }
 .action-bar{
     width: 100%;

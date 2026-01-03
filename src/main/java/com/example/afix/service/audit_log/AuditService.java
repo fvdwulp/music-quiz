@@ -5,9 +5,10 @@ import com.example.afix.model.AuditLog;
 import com.example.afix.repository.AuditLogRepository;
 import com.example.afix.service.AbstractUserAwareService;
 import com.example.afix.service.user.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -22,8 +23,8 @@ public class AuditService extends AbstractUserAwareService {
         this.repository = repository;
     }
 
-    public List<AuditLog> findAll() {
-        return repository.findAll();
+    public Page<AuditLog> findPage(Pageable page) {
+        return repository.findAll(page);
     }
 
     public void log(AuditAction action,
