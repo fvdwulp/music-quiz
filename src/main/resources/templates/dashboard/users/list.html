@@ -14,7 +14,6 @@
             <thead class="table-dark">
             <tr>
                 <th class="left-column">Username</th>
-                <th class="left-column">Wachtwoord</th>
                 <th>Beschikbaar</th>
                 <th>Rollen</th>
                 <th th:width="230px">Acties</th>
@@ -23,7 +22,6 @@
             <tbody>
             <tr th:each="user: ${users}">
                 <td class="left-column" th:text="${user.username}"></td>
-                <td class="left-column" th:text="${user.password}"></td>
                 <td th:text="${user.enabled.toString() == 'true' ? 'Yes' : 'No'}"></td>
                 <td>
                     <span th:each="role : ${user.roles}">
