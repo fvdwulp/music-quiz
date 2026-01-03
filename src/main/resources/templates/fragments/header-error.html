@@ -1,0 +1,60 @@
+<head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title th:text="${pageTitle} ? ${pageTitle} : 'Music quiz'"></title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <meta charset="UTF-8">
+    <title>Error</title>
+
+    <style>
+        body {
+            background: radial-gradient(circle at top, #12204B, #0b132e);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .error-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.4);
+        }
+
+        .error-code {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #6ea8fe;
+        }
+
+        .error-subtitle {
+            font-size: 1.2rem;
+            opacity: .9;
+        }
+
+        .logo {
+            max-width: 180px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: #2D3E6C;
+            border: none;
+            padding: 0.6rem 1.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a4f86;
+        }
+        .logo{ width: 100%; }
+    </style>
+
+</head>

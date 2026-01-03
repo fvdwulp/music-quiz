@@ -1,13 +1,13 @@
 <div th:fragment="menu" class="menu-left" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="menu-logo">
-        <a class="logo-click" th:href="@{/home}">
+        <a class="logo-click" th:href="@{/}">
             <img th:src="@{/assets/logo-quiz.png}" />
         </a>
     </div>
     <div class="menu-region">
         <ul>
-            <li th:classappend="${activePage.startsWith('/home')} ? ' active' : ''">
-                <a th:href="@{/home}">
+            <li th:classappend="${activePage.startsWith('/') && activePage.endsWith('/')} ? ' active' : ''">
+                <a th:href="@{/}">
                     <i class="lni lni-home-2"></i> Home
                 </a>
             </li>
