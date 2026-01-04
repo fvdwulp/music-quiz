@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+
+<div th:replace="~{fragments/menu-left :: menu}"></div>
+<div th:replace="~{fragments/top-content :: top-content}"></div>
+
+        <h1>Logs</h1>
+        <div class="action-bar">
+
+        </div>
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+            <tr>
+                <th class="left-column">UserId</th>
+                <th class="left-column">Gebruikersnaam</th>
+                <th class="left-column">Actie</th>
+                <th class="left-column">Datum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="log: ${logs}">
+                <td th:text="${log.getUserId()}" class="left-column"></td>
+                <td th:text="${log.getUsername()}" class="left-column"></td>
+                <td th:text="${log.getAction()}" class="left-column"></td>
+                <td th:text="${log.getCreatedAt()}" class="left-column"></td>
+            </tr>
+            </tbody>
+        </table>
+<nav th:if="${logPage.totalPages > 1}">
+    <ul class="pagination justify-content-center">
+
+        <!-- Previous -->
+        <li class="page-item" th:classappend="${logPage.first} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{/logs(page=${logPage.number - 1})}">
+                ← Vorige
+            </a>
+        </li>
+
+        <!-- Page numbers -->
+        <li class="page-item"
+            th:each="i : ${#numbers.sequence(0, logPage.totalPages - 1)}"
+            th:classappend="${i == logPage.number} ? 'active'">
+            <a class="page-link"
+               th:text="${i + 1}"
+               th:href="@{/logs(page=${i})}">
+            </a>
+        </li>
+
+        <!-- Next -->
+        <li class="page-item" th:classappend="${logPage.last} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{/logs(page=${logPage.number + 1})}">
+                Volgende →
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+
+
+<th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
+
