@@ -1,0 +1,14 @@
+# Git
+.git
+.gitignore
+
+# IDEs
+.idea
+.vscode
+*.iml
+
+# Node (if any)
+node_modules
+
+# OS
+.DS_Store

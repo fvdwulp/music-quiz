@@ -1,15 +1,26 @@
-# Use an official JDK image
+# ---------- BUILD STAGE ----------
+FROM maven:3.9-eclipse-temurin-17 AS build
+
+WORKDIR /build
+
+# Copy pom first (better caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy source and build
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+
+# ---------- RUN STAGE ----------
 FROM eclipse-temurin:17-jdk
 
-# Set working directory
 WORKDIR /app
 
-# Copy the repo into the container
-COPY . .
+# Copy the built jar from build stage
+COPY --from=build /build/target/*.jar app.jar
 
-# Expose port (Render sets $PORT)
 ENV PORT=8080
-EXPOSE $PORT
+EXPOSE 8080
 
-# Run the JAR
-CMD ["sh", "-c", "java -jar deploy/myserver-0.0.1-SNAPSHOT.jar"]
+CMD ["sh", "-c", "java -jar app.jar"]
