@@ -6,7 +6,11 @@
 <div id="app">
     <router-view></router-view>
 
-    <div v-if="loading">Loading questions...</div>
+    <div v-if="appError == true" class="quiz">
+        <h2>Oops</h2>
+        <p>{{ appErrorMessage }}</p>
+    </div>
+    <div v-else-if="loading">Loading questions...</div>
     <div v-else-if="quiz.enabled == false" class="quiz">
         <h2>Oops</h2>
         <p>Deze quiz is niet meer beschikbaar</p>
@@ -62,6 +66,8 @@
                 correctAnswerId: null,
                 previewUrl: null,
                 loading: true,
+                appError: false,
+                appErrorMessage: "",
                 quizDone: false,
                 correctAnswers: 0,
             };
@@ -79,11 +85,18 @@
 
             try {
                 const res = await fetch(`/api/quiz/${this.quizId}`);
+
+                if (!res.ok) {
+                    this.appError = true
+                    this.appErrorMessage = "Er is iets misgegaan met het ophalen van de quiz. Probeer het later opnieuw."
+                }
+
                 this.quiz = await res.json();
                 this.loading = false;
                 this.loadQuiz();
             } catch (e) {
-                console.error('Error fetching questions', e);
+                this.appError = true
+                this.appErrorMessage = "Er is iets misgegaan met het ophalen van de quiz. Probeer het later opnieuw."
             }
         },
         methods: {
@@ -109,9 +122,16 @@
             async playSong() {
                 try {
                     const res = await fetch('/api/songs/preview/' + this.question.trackId);
+                    if (!res.ok) {
+                        this.appError = true
+                        this.appErrorMessage = "Er is iets fout gegaan met het ophalen van de nummers. Probeer het later opnieuw."
+                    }
+
                     this.previewUrl = await res.text();
                 } catch (e) {
-                    console.error('Error fetching song preview', e);
+                    this.appError = true
+                    this.appErrorMessage = "Er is iets fout gegaan met het ophalen van de nummers. Probeer het later opnieuw."
+                    console.log(appError)
                 }
             },
             async checkAnswer(answer) {
