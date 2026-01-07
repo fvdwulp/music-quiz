@@ -43,6 +43,15 @@ public class QuestionServiceImpl extends AbstractUserAwareService implements Que
 
     @Override
     public Question getById(int id) {
+        Optional<Question> question = questionRepository.findById(id);
+        if(question.isPresent())
+            return question.get();
+        else
+            throw new RuntimeException("Did not find question id - " + id);
+    }
+
+    @Override
+    public Question getByIdAndOwner(int id) {
         Optional<Question> question = questionRepository.findByIdAndOwner(id, getCurrentUser());
         if(question.isPresent())
             return question.get();

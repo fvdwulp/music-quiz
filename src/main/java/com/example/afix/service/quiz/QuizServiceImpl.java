@@ -37,7 +37,16 @@ public class QuizServiceImpl extends AbstractUserAwareService implements QuizSer
     }
 
     @Override
-    public Quiz findByString(UUID id) {
+    public Quiz findById(UUID id) {
+        Optional<Quiz> quiz = quizRepository.findById(id);
+        if(quiz.isPresent())
+            return quiz.get();
+        else
+            throw new RuntimeException("Did not find quiz id - " + id);
+    }
+
+    @Override
+    public Quiz findByStringAndOwner(UUID id) {
         Optional<Quiz> quiz = quizRepository.findByIdAndOwner(id, getCurrentUser());
         if(quiz.isPresent())
             return quiz.get();

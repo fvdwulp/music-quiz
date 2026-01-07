@@ -2,7 +2,6 @@ package com.example.afix.controller.dashboard;
 
 import com.example.afix.model.Answer;
 import com.example.afix.model.Question;
-import com.example.afix.model.Song;
 import com.example.afix.service.answer.AnswerService;
 import com.example.afix.service.question.QuestionService;
 import com.example.afix.service.song.SongService;
@@ -60,7 +59,7 @@ public class QuestionController {
 
     @GetMapping("/edit/{id}")
     public String editQuestion(Model model, @PathVariable int id){
-        Question question = questionService.getById(id);
+        Question question = questionService.getByIdAndOwner(id);
         if(question == null)
             return "redirect:/questions";
 
@@ -104,7 +103,7 @@ public class QuestionController {
 
     @PostMapping("/{id}/delete")
     public String deleteQuestion(@PathVariable int id){
-        Question question = questionService.getById(id);
+        Question question = questionService.getByIdAndOwner(id);
         if(question == null)
             return "redirect:/questions";
 

@@ -46,7 +46,7 @@ public class AdminQuizController {
 
     @GetMapping("/edit/{id}")
     public String editQuiz(@PathVariable UUID id, Model model) {
-        Quiz existingQuiz = quizService.findByString(id);
+        Quiz existingQuiz = quizService.findByStringAndOwner(id);
         if (existingQuiz == null)
             return "redirect:/quizzes";
 
@@ -76,7 +76,7 @@ public class AdminQuizController {
 
     @PostMapping("/{id}/delete")
     public String deleteQuiz(@PathVariable UUID id){
-        Quiz quiz = quizService.findByString(id);
+        Quiz quiz = quizService.findByStringAndOwner(id);
         if(quiz == null)
             return "redirect:/quizzes";
 
