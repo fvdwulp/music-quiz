@@ -17,12 +17,8 @@
             <input id="username" class="form-control" type="text"
                    th:field="*{username}" placeholder="What is the username?" required readonly />
         </div>
-
-
-            <input id="password" class="form-control" type="hidden"
+        <input id="password" class="form-control" type="hidden"
                    th:field="*{password}" placeholder="What is the password?" required readonly />
-
-
         <div class="form-group mb-3">
             <label for="enabled">Enabled</label>
             <select id="enabled" class="form-control" th:field="*{enabled}" required>
@@ -47,9 +43,6 @@
         </div>
         <input type="submit" class="btn btn-info" value="Save User">
     </form>
-
-
-
 
 <th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
 

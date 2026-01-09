@@ -30,16 +30,12 @@
         </table>
 <nav th:if="${logPage.totalPages > 1}">
     <ul class="pagination justify-content-center">
-
-        <!-- Previous -->
         <li class="page-item" th:classappend="${logPage.first} ? 'disabled'">
             <a class="page-link"
                th:href="@{/logs(page=${logPage.number - 1})}">
                 ← Vorige
             </a>
         </li>
-
-        <!-- Page numbers -->
         <li class="page-item"
             th:each="i : ${#numbers.sequence(0, logPage.totalPages - 1)}"
             th:classappend="${i == logPage.number} ? 'active'">
@@ -48,19 +44,14 @@
                th:href="@{/logs(page=${i})}">
             </a>
         </li>
-
-        <!-- Next -->
         <li class="page-item" th:classappend="${logPage.last} ? 'disabled'">
             <a class="page-link"
                th:href="@{/logs(page=${logPage.number + 1})}">
                 Volgende →
             </a>
         </li>
-
     </ul>
 </nav>
-
-
 
 <th:block th:insert="fragments/bottom-content :: close-divs"></th:block>
 

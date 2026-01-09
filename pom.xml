@@ -12,7 +12,7 @@
 	</parent>
 
 	<groupId>com.example</groupId>
-	<artifactId>afix</artifactId>
+	<artifactId>music_quiz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Afix</name>
 	<description>Demo project for Spring Boot</description>
